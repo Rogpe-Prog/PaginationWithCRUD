@@ -1,0 +1,48 @@
+<%- include ('../partials/header.ejs') %>
+
+<h1>Pessoa</h1>
+<p><a href="/pessoas/create">Nova Pessoas</a></p>
+
+<table class="table table-striped tabel-hover table-bordered">
+    <tr>
+        <th>Nome</th>
+        <th>Cargo</th>
+        <th>Ações</th>
+    </tr>
+    <% pessoas.map( pessoa => { %>
+    <tr>
+        <td><%= pessoa.nome %></td>
+        <td><%= pessoa.cargo %></td>
+        <td>
+            <div class="btn-group" role="group">
+                <a href="/pessoas/edit/<%= pessoa.id %>" class="btn btn-outline-secondary">Editar</a>
+                <a href="/pessoas/delete/<%= pessoa.id %>" class="btn btn-outline-secondary">Excluir</a>
+            </div>
+        </td>
+    </tr>    
+    <% }) %>
+</table>
+
+<div>
+    Mostrar: <a href="/pessoas?pageSize=50"> 50 </a> | <a href="/pessoas?pageSize=100"> 100 </a> | <a href="/pessoas?pageSize=200"> 200 </a>
+    <nav aria-label="Page navigation example ">
+        <ul class="pagination flex-wrap">
+
+        <% if(pagination.currentPage>0){ %>    
+        <li class="page-item"><a class="page-link" href="/pessoas?page=<%= (pagination.currentPage-1) %>">Previous</a></li>
+        <% } %>
+
+        <% for(let i=0; i<pagination.pages; i++){ %>
+   
+        <li class="page-item<% if(i==pagination.currentPage){ %> active <% } %>"><a class="page-link" href="/pessoas?page=<%= i %>"><%= (i+1) %></a></li>
+   
+        <% } %>
+        <% if(pagination.currentPage<pagination.pages-1){ %>
+        <li class="page-item"><a class="page-link" href="/pessoas?page=<%= pagination.currentPage+1 %>">Next</a></li>
+        <% } %>
+        </ul>
+    </nav>
+</div>
+
+
+<%- include ('../partials/footer.ejs') %>
